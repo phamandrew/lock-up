@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Lock Up</title>
+</head>
+<body>
+	<p><button onclick="findHome()">Show my location</button></p>
+	<div id="out"></div>
+
+	<script>
+
+		var home;
+
+		
+		function findHome() {
+
+
+			function success (position) {
+
+				var home = position.coords;
+			}
+
+			function error () {
+				console.log('error');
+			}
+
+			navigator.geolocation.getCurrentPosition(success, error);
+		}
+
+		function checkDoor () {
+
+			function success (position) {
+				var location = position.coords;
+
+				if (location.longitude > home.longitude + 200 || location.latitude > home.latitude + 200) {
+
+				}
+			}
+
+			navigator.geolocation.watchPosition(success, error, options);
+		}
+
+
+	</script>
+</body>
+</html>
