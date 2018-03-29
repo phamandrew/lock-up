@@ -1,30 +1,23 @@
-// Hypothetical backend where user information is stored, f
-		// for sake of challenge, backend will exist as global variables
+// Hypothetical backend where user information is stored, 
+// For sake of challenge, backend will exist as global variables
 
-		var home = {
-			longitude: -79.384293,
-			latitude: 43.653908
-		};
+// var home = {
+// 	longitude: -79.384293,
+// 	latitude: 43.653908
+// };
 
-		// var home;
+var home;
 
-		// var home = undefined;
+		// Establish user home coordinates
 
-		// console.log(home);
-
-		
 		function findHome() {
 
 
 			function success (position) {
 
-				// home = position.coords;
-				// return;
+				// hypothetical push of user's home coordinates to backend
 
-
-
-				// position.coords.longitude = home.longitude;
-				// position.coords.latitude = home.latitude;
+				home = position.coords;
 
 			console.log(home.longitude);
 			console.log(home.latitude);
@@ -37,6 +30,8 @@
 			navigator.geolocation.getCurrentPosition(success, error);
 
 		}
+
+		// Establish user's current location and measure distance to home location
 
 		function checkDoor () {
 
@@ -72,11 +67,16 @@
 
 				var distanceHomeToCurrent = distanceInMetersBetweenEarthCoordinates(home.latitude, home.longitude, location.latitude, location.longitude);
 
+				// if distance between user location and home location is greater than 200 meters
+
 				if (distanceHomeToCurrent > 200) {
 					console.log('did you lock your door?')
 				}
+
+				// if user is still at home
+				
 				else {
-					
+
 					console.log('youre still at home, dum dum');
 				}
 			}
