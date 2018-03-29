@@ -1,11 +1,14 @@
-// Hypothetical backend where user information is stored, 
-// For sake of challenge, backend will exist as global variables
 
 
 // var home;
 
+var output = document.getElementById("out");
+
 var profile = {
-	home: {},
+	home: {
+		// longitude: 200,
+		// latitude: -200
+	},
 
 };
 
@@ -15,29 +18,33 @@ var profile = {
 			return profile;
 		}
 
-		function updateProfileHome(long, lat) {
+		function updateHome(long, lat) {
 			profile.home.longitude = long;
 			profile.home.latitude = lat;
 		};
 
-		function updateProfile(kaaw) {
-			if (kaaw > 200) {
-					// console.log('did you lock your door?')
+		// function updateProfile(distance) {
+		// 	if (distance > 200) {
+		// 			// console.log('did you lock your door?')
 
-					profile.leftHome = true;
+		// 			profile.leftHome = true;
 
-					console.log(profile);
-				}
+		// 			console.log(profile);
+		// 		}
 
-				// if user is still at home
+		// 		// if user is still at home
 
-				else {
+		// 		else {
 
-					// console.log('youre still at home, dum dum');
-					profile.leftHome = false;
-					console.log(profile);
-				}
-		};
+		// 			// console.log('youre still at home, dum dum');
+		// 			profile.leftHome = false;
+		// 			console.log(profile);
+		// 		}
+		// };
+
+		function updateProfile(flag) {
+			profile.leftHome = flag;
+		}
 
 
 
@@ -48,27 +55,20 @@ var profile = {
 
 			function success (position) {
 
-				// console.log(position.coords.longitude);
-				// console.log(position.coords.latitude);
-
 				// hypothetical push of user's home coordinates to backend
 
-				updateProfileHome(position.coords.longitude, position.coords.latitude);
+				updateHome(position.coords.longitude, position.coords.latitude);
 
 				console.log(profile.home.longitude);
 				console.log(profile.home.latitude);
 
-				// profile.home.longitude = position.coords.longitude;
-				// profile.home.latitude = position.coords.latitude;
-
-				// profile.home = position.coords;
-
-			// console.log(profile.home.longitude);
-			// console.log(profile.home.latitude);
 			}
 
 			function error () {
 				console.log('error');
+				var output = document.getElementById("out");
+
+				output.innerHTML = '<p>Please enable Geolocation.</p>';
 			}
 
 			navigator.geolocation.getCurrentPosition(success, error);
@@ -81,13 +81,11 @@ var profile = {
 
 			function success (position) {
 
+				// hypothetical API call for user profile information
+
 				getProfile();
 
 				var location = position.coords;
-
-				// console.log(location.longitude);
-				// console.log(location.latitude);
-
 
 				//  conversion of degrees to radians
 
@@ -97,7 +95,8 @@ var profile = {
 
 				// calculation of distance in meters between home and current coordinates
 
-				function distanceInMetersBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
+				function distanceBetween(lat1, lon1, lat2, lon2) {
+
 					var earthRadiusKm = 6371;
 
 					var dLat = degreesToRadians(lat2-lat1);
@@ -109,34 +108,37 @@ var profile = {
 					var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
 					var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 					return (earthRadiusKm * c) * 1000;
+
 				}
 
-				var distanceHomeToCurrent = distanceInMetersBetweenEarthCoordinates(profile.home.latitude, profile.home.longitude, location.latitude, location.longitude);
+				var distanceHomeToCurrent = distanceBetween(profile.home.latitude, profile.home.longitude, location.latitude, location.longitude);
 
 				// if distance between user location and home location is greater than 200 meters
 
-				updateProfile(distanceHomeToCurrent);
+				if (distanceHomeToCurrent > 200) {
 
-				// if (distanceHomeToCurrent > 200) {
-				// 	// console.log('did you lock your door?')
 
-				// 	profile.leftHome = true;
+					output.innerHTML = '<p>Did you lock the door?</p>';
 
-				// 	console.log(profile);
-				// }
 
-				// // if user is still at home
+					updateProfile(true);
 
-				// else {
+					console.log(profile);
 
-				// 	// console.log('youre still at home, dum dum');
-				// 	profile.leftHome = false;
-				// 	console.log(profile);
-				// }
+				}
+
+				// if user is still at home
+
+				else {
+
+					updateProfile(false);
+					console.log(profile);
+
+				}
 			}
 
 			function error () {
-				console.log('error');
+				output.innerHTML = '<p>Please enable Geolocation.</p>';
 			}
 
 
