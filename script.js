@@ -5,21 +5,41 @@
 // var home;
 
 var profile = {
-	home: {
-
-	},
+	home: {},
 
 };
 
 
 
-		// function getProfile() {
-		// 	return profile;
-		// }
+		function getProfile() {
+			return profile;
+		}
 
-		// function updateProfile() {
-		// 	if 
-		// }
+		function updateProfileHome(long, lat) {
+			profile.home.longitude = long;
+			profile.home.latitude = lat;
+		};
+
+		function updateProfile(kaaw) {
+			if (kaaw > 200) {
+					// console.log('did you lock your door?')
+
+					profile.leftHome = true;
+
+					console.log(profile);
+				}
+
+				// if user is still at home
+
+				else {
+
+					// console.log('youre still at home, dum dum');
+					profile.leftHome = false;
+					console.log(profile);
+				}
+		};
+
+
 
 		// Establish user home coordinates
 
@@ -28,15 +48,23 @@ var profile = {
 
 			function success (position) {
 
+				// console.log(position.coords.longitude);
+				// console.log(position.coords.latitude);
+
 				// hypothetical push of user's home coordinates to backend
 
-				profile.home.longitude = position.coords.longitude;
-				profile.home.latitude = position.coords.latitude;
+				updateProfileHome(position.coords.longitude, position.coords.latitude);
+
+				console.log(profile.home.longitude);
+				console.log(profile.home.latitude);
+
+				// profile.home.longitude = position.coords.longitude;
+				// profile.home.latitude = position.coords.latitude;
 
 				// profile.home = position.coords;
 
-			console.log(profile.home.longitude);
-			console.log(profile.home.latitude);
+			// console.log(profile.home.longitude);
+			// console.log(profile.home.latitude);
 			}
 
 			function error () {
@@ -52,6 +80,8 @@ var profile = {
 		function checkDoor () {
 
 			function success (position) {
+
+				getProfile();
 
 				var location = position.coords;
 
@@ -85,22 +115,24 @@ var profile = {
 
 				// if distance between user location and home location is greater than 200 meters
 
-				if (distanceHomeToCurrent > 200) {
-					// console.log('did you lock your door?')
+				updateProfile(distanceHomeToCurrent);
 
-					profile.leftHome = true;
+				// if (distanceHomeToCurrent > 200) {
+				// 	// console.log('did you lock your door?')
 
-					console.log(profile);
-				}
+				// 	profile.leftHome = true;
 
-				// if user is still at home
+				// 	console.log(profile);
+				// }
 
-				else {
+				// // if user is still at home
 
-					// console.log('youre still at home, dum dum');
-					profile.leftHome = false;
-					console.log(profile);
-				}
+				// else {
+
+				// 	// console.log('youre still at home, dum dum');
+				// 	profile.leftHome = false;
+				// 	console.log(profile);
+				// }
 			}
 
 			function error () {
