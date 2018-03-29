@@ -1,12 +1,25 @@
 // Hypothetical backend where user information is stored, 
 // For sake of challenge, backend will exist as global variables
 
-// var home = {
-// 	longitude: -79.384293,
-// 	latitude: 43.653908
-// };
 
-var home;
+// var home;
+
+var profile = {
+	home: {
+
+	},
+
+};
+
+
+
+		// function getProfile() {
+		// 	return profile;
+		// }
+
+		// function updateProfile() {
+		// 	if 
+		// }
 
 		// Establish user home coordinates
 
@@ -17,10 +30,13 @@ var home;
 
 				// hypothetical push of user's home coordinates to backend
 
-				home = position.coords;
+				profile.home.longitude = position.coords.longitude;
+				profile.home.latitude = position.coords.latitude;
 
-			console.log(home.longitude);
-			console.log(home.latitude);
+				// profile.home = position.coords;
+
+			console.log(profile.home.longitude);
+			console.log(profile.home.latitude);
 			}
 
 			function error () {
@@ -65,19 +81,25 @@ var home;
 					return (earthRadiusKm * c) * 1000;
 				}
 
-				var distanceHomeToCurrent = distanceInMetersBetweenEarthCoordinates(home.latitude, home.longitude, location.latitude, location.longitude);
+				var distanceHomeToCurrent = distanceInMetersBetweenEarthCoordinates(profile.home.latitude, profile.home.longitude, location.latitude, location.longitude);
 
 				// if distance between user location and home location is greater than 200 meters
 
 				if (distanceHomeToCurrent > 200) {
-					console.log('did you lock your door?')
+					// console.log('did you lock your door?')
+
+					profile.leftHome = true;
+
+					console.log(profile);
 				}
 
 				// if user is still at home
-				
+
 				else {
 
-					console.log('youre still at home, dum dum');
+					// console.log('youre still at home, dum dum');
+					profile.leftHome = false;
+					console.log(profile);
 				}
 			}
 
@@ -87,4 +109,7 @@ var home;
 
 
 			navigator.geolocation.watchPosition(success, error);
+
 		}
+
+
