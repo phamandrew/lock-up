@@ -2,17 +2,11 @@
 
 // var home;
 
-var output = document.getElementById("out");
+// var output = document.getElementById("out");
 
 var profile = {
-	home: {
-		// longitude: 200,
-		// latitude: -200
-	},
-
+	home: {},
 };
-
-
 
 		function getProfile() {
 			return profile;
@@ -23,35 +17,14 @@ var profile = {
 			profile.home.latitude = lat;
 		};
 
-		// function updateProfile(distance) {
-		// 	if (distance > 200) {
-		// 			// console.log('did you lock your door?')
-
-		// 			profile.leftHome = true;
-
-		// 			console.log(profile);
-		// 		}
-
-		// 		// if user is still at home
-
-		// 		else {
-
-		// 			// console.log('youre still at home, dum dum');
-		// 			profile.leftHome = false;
-		// 			console.log(profile);
-		// 		}
-		// };
 
 		function updateProfile(flag) {
 			profile.leftHome = flag;
 		}
 
-
-
 		// Establish user home coordinates
 
 		function findHome() {
-
 
 			function success (position) {
 
@@ -61,7 +34,6 @@ var profile = {
 
 				console.log(profile.home.longitude);
 				console.log(profile.home.latitude);
-
 			}
 
 			function error () {
@@ -72,7 +44,6 @@ var profile = {
 			}
 
 			navigator.geolocation.getCurrentPosition(success, error);
-
 		}
 
 		// Establish user's current location and measure distance to home location
@@ -108,7 +79,6 @@ var profile = {
 					var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
 					var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 					return (earthRadiusKm * c) * 1000;
-
 				}
 
 				var distanceHomeToCurrent = distanceBetween(profile.home.latitude, profile.home.longitude, location.latitude, location.longitude);
@@ -117,14 +87,12 @@ var profile = {
 
 				if (distanceHomeToCurrent > 200) {
 
-
 					output.innerHTML = '<p>Did you lock the door?</p>';
 
 
 					updateProfile(true);
 
 					console.log(profile);
-
 				}
 
 				// if user is still at home
@@ -133,7 +101,6 @@ var profile = {
 
 					updateProfile(false);
 					console.log(profile);
-
 				}
 			}
 
@@ -143,7 +110,6 @@ var profile = {
 
 
 			navigator.geolocation.watchPosition(success, error);
-
 		}
 
 
